@@ -1,4 +1,4 @@
-import { getLatestLeague } from '@/lib/league'
+import { getLatestLeague, isAuthenticated } from '@/lib/league'
 import { EmptyState } from '@/components/frontend/EmptyState'
 import { MatchdayCard } from '@/components/frontend/MatchdayCard'
 import { Header } from '@/components/frontend/Header'
@@ -6,7 +6,7 @@ import { Header } from '@/components/frontend/Header'
 export const dynamic = 'force-dynamic'
 
 export default async function SpieltagePage() {
-  const league = await getLatestLeague()
+  const [league, loggedIn] = await Promise.all([getLatestLeague(), isAuthenticated()])
 
   if (!league) {
     return <EmptyState />
@@ -16,7 +16,7 @@ export default async function SpieltagePage() {
 
   return (
     <div>
-      <Header leagueName={league.name} />
+      <Header leagueName={league.name} isLoggedIn={loggedIn} />
 
       {matchdays.length === 0 ? (
         <div className="border border-bb-border bg-bb-panel p-12 text-center">

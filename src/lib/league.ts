@@ -37,3 +37,11 @@ export async function getLatestLeague(): Promise<ResolvedLeague | undefined> {
 
   return docs[0] as ResolvedLeague | undefined
 }
+
+export async function isAuthenticated(): Promise<boolean> {
+  const { headers: getHeaders } = await import('next/headers')
+  const headers = await getHeaders()
+  const payload = await getPayload({ config })
+  const { user } = await payload.auth({ headers })
+  return !!user
+}
