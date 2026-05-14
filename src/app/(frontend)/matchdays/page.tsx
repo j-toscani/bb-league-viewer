@@ -1,12 +1,11 @@
 import { getLatestLeague, isAuthenticated } from '@/lib/league'
-import { computeStandings } from '@/lib/standings'
 import { EmptyState } from '@/components/frontend/EmptyState'
-import { LeagueTable } from '@/components/frontend/LeagueTable'
+import { MatchdayCard } from '@/components/frontend/MatchdayCard'
 import { Header } from '@/components/frontend/Header'
 
 export const dynamic = 'force-dynamic'
 
-export default async function HomePage() {
+export default async function SpieltagePage() {
   const [league, loggedIn] = await Promise.all([getLatestLeague(), isAuthenticated()])
 
   if (!league) {
@@ -26,7 +25,16 @@ export default async function HomePage() {
           </p>
         </div>
       ) : (
-        <LeagueTable groups={computeStandings(matchdays)} />
+        <div className="flex flex-col gap-6">
+          {matchdays.map((matchday, index) => (
+            <MatchdayCard
+              key={matchday.id ?? index}
+              name={matchday.name}
+              matchups={matchday.matchups ?? []}
+              index={index}
+            />
+          ))}
+        </div>
       )}
     </div>
   )
