@@ -1,10 +1,9 @@
-import React from 'react'
+import Link from 'next/link'
 
 export function EmptyState() {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
       <div className="border border-bb-border bg-bb-panel p-12">
-        {/* Trophy icon */}
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center bg-bb-surface">
           <svg
             className="h-10 w-10 text-bb-gold"
@@ -21,23 +20,27 @@ export function EmptyState() {
           </svg>
         </div>
 
-        <h2 className="mb-2 text-2xl font-bold text-bb-text">
-          Keine Liga vorhanden
-        </h2>
+        <h2 className="mb-2 text-2xl font-bold text-bb-text">Keine Liga vorhanden</h2>
         <p className="mb-8 max-w-md text-bb-text-muted">
-          Es wurde noch keine Liga erstellt. Erstelle eine neue Liga im Admin-Panel, 
-          um Spieltage und Ergebnisse hier anzuzeigen.
+          Es wurde noch keine Liga erstellt. Erstelle eine neue Liga im Admin-Panel, um Spieltage
+          und Ergebnisse hier anzuzeigen.
         </p>
 
-        <a
+        <Link
           href="/admin/collections/leagues/create"
           className="inline-flex items-center gap-2 bg-bb-red px-6 py-3 font-semibold text-white transition-colors hover:bg-bb-red-light"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
           Liga erstellen
-        </a>
+        </Link>
       </div>
     </div>
   )

@@ -49,7 +49,6 @@ export default async function HomePage() {
 
   return (
     <div>
-      {/* Header */}
       <header className="mb-8">
         <div className="flex items-center gap-3">
           <div className="h-1 w-8 bg-bb-red" />
@@ -65,7 +64,6 @@ export default async function HomePage() {
         </p>
       </header>
 
-      {/* Matchday List */}
       {matchdays.length === 0 ? (
         <div className="border border-bb-border bg-bb-panel p-12 text-center">
           <p className="text-bb-text-muted">

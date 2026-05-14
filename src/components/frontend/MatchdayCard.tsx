@@ -27,7 +27,6 @@ export function MatchdayCard({ name, matchups, index }: MatchdayCardProps) {
       className="overflow-hidden border border-bb-border bg-bb-panel"
       style={{ animationDelay: `${index * 80}ms` }}
     >
-      {/* Header */}
       <div className="flex items-center gap-3 border-b border-bb-border bg-bb-surface px-5 py-3">
         <div className="flex h-7 w-7 items-center justify-center bg-bb-crimson text-xs font-bold text-white">
           {index + 1}
@@ -38,7 +37,6 @@ export function MatchdayCard({ name, matchups, index }: MatchdayCardProps) {
         </span>
       </div>
 
-      {/* Matchups */}
       <div className="flex flex-col gap-2 p-3 sm:p-4">
         {matchups.length === 0 ? (
           <p className="py-4 text-center text-sm text-bb-text-muted">
