@@ -4,6 +4,8 @@ import type { League, Matchup, Team } from '@/payload-types'
 import { EmptyState } from '@/components/frontend/EmptyState'
 import { MatchdayCard } from '@/components/frontend/MatchdayCard'
 
+export const dynamic = 'force-dynamic'
+
 type ResolvedMatchup = Omit<Matchup, 'homeTeam' | 'awayTeam'> & {
   homeTeam: {
     team: Team
