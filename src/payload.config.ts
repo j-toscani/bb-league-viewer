@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Teams } from './collections/Teams'
 import { Matchups } from './collections/Matchups'
 import { Leagues } from './collections/Leagues'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,6 +32,7 @@ export default buildConfig({
     client: {
       url: process.env.DATABASE_URL || '',
     },
+    prodMigrations: migrations,
   }),
   sharp,
   plugins: [],

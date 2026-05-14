@@ -25,7 +25,6 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --chown=nextjs:nodejs entrypoint.sh ./entrypoint.sh
 
 RUN mkdir -p /data && chown nextjs:nodejs /data
 
@@ -40,4 +39,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
   CMD wget -qO- http://localhost:3000/ || exit 1
 
-CMD ["sh", "./entrypoint.sh"]
+CMD ["node", "server.js"]
