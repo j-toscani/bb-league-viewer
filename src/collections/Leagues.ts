@@ -1,4 +1,7 @@
-import type { CollectionConfig } from 'payload'
+import type { League } from '@/payload-types'
+import type { CollectionConfig, FilterOptionsProps } from 'payload'
+
+type Matchday = NonNullable<League['matchdays']>[number]
 
 export const Leagues: CollectionConfig = {
   slug: 'leagues',
@@ -36,6 +39,22 @@ export const Leagues: CollectionConfig = {
           relationTo: 'matchups',
           hasMany: true,
           label: 'Matchups',
+          filterOptions: ({ data, siblingData }: FilterOptionsProps<League>) => {
+            const matchdays = data?.matchdays ?? []
+            const allUsedIds = matchdays
+              .flatMap((md) => md.matchups ?? [])
+              .filter((id): id is number => typeof id === 'number')
+
+            const sibling = siblingData as Partial<Matchday> | undefined
+            const currentIds =
+              sibling?.matchups?.filter((id): id is number => typeof id === 'number') ?? []
+
+            const idsToExclude = allUsedIds.filter((id) => !currentIds.includes(id))
+
+            return {
+              id: { not_in: idsToExclude },
+            }
+          },
         },
       ],
     },
