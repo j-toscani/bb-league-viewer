@@ -60,6 +60,9 @@ export function computeStandings(matchdays: ResolvedMatchday[]): StandingsGroup[
       const home = getOrCreate(matchup.homeTeam.team)
       const away = getOrCreate(matchup.awayTeam.team)
 
+      const isPlayed = !!matchup.date && new Date(matchup.date) <= new Date()
+      if (!isPlayed) continue
+
       home.pointsFor += matchup.homeTeam.touchdowns
       home.pointsAgainst += matchup.awayTeam.touchdowns
       home.casualtiesFor += matchup.homeTeam.casualties
