@@ -24,8 +24,8 @@ export function MatchupRow({ matchup }: { matchup: ResolvedMatchup }) {
   const { homeTeam, awayTeam } = matchup
   const result = getMatchResult(homeTeam.touchdowns, awayTeam.touchdowns)
 
-  const homeHighlight = result === 'home' ? 'text-bb-win font-bold' : result === 'away' ? 'text-bb-text-muted' : 'text-bb-draw'
-  const awayHighlight = result === 'away' ? 'text-bb-win font-bold' : result === 'home' ? 'text-bb-text-muted' : 'text-bb-draw'
+  const homeHighlight = result === 'home' ? 'text-bb-gold font-bold' : result === 'away' ? 'text-bb-text-muted' : 'text-bb-gold-dim'
+  const awayHighlight = result === 'away' ? 'text-bb-gold font-bold' : result === 'home' ? 'text-bb-text-muted' : 'text-bb-gold-dim'
 
   return (
     <div className="group flex items-center gap-3 border border-bb-border bg-bb-dark px-4 py-3 transition-colors hover:border-bb-gold-dim hover:bg-bb-surface sm:px-6">
