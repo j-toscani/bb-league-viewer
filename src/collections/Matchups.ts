@@ -3,9 +3,41 @@ import type { CollectionConfig } from 'payload'
 export const Matchups: CollectionConfig = {
   slug: 'matchups',
   admin: {
-    useAsTitle: 'date',
+    useAsTitle: 'title',
+  },
+  hooks: {
+    beforeChange: [
+      async ({ data, req }) => {
+        const homeTeamId =
+          typeof data?.homeTeam?.team === 'object' ? data.homeTeam.team.id : data?.homeTeam?.team
+        const awayTeamId =
+          typeof data?.awayTeam?.team === 'object' ? data.awayTeam.team.id : data?.awayTeam?.team
+
+        let homeName = 'TBD'
+        let awayName = 'TBD'
+
+        if (homeTeamId) {
+          const homeTeam = await req.payload.findByID({ collection: 'teams', id: homeTeamId })
+          homeName = homeTeam.name
+        }
+        if (awayTeamId) {
+          const awayTeam = await req.payload.findByID({ collection: 'teams', id: awayTeamId })
+          awayName = awayTeam.name
+        }
+
+        data.title = `${homeName} vs ${awayName}`
+        return data
+      },
+    ],
   },
   fields: [
+    {
+      name: 'title',
+      type: 'text',
+      admin: {
+        readOnly: true,
+      },
+    },
     {
       name: 'date',
       type: 'date',

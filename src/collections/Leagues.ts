@@ -16,6 +16,13 @@ export const Leagues: CollectionConfig = {
       name: 'matchdays',
       type: 'array',
       label: 'Matchdays',
+      admin: {
+        components: {
+          RowLabel: {
+            path: '@/components/MatchdayRowLabel',
+          },
+        },
+      },
       fields: [
         {
           name: 'name',

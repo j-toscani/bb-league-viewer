@@ -188,6 +188,7 @@ export interface Team {
  */
 export interface Matchup {
   id: number;
+  title?: string | null;
   date?: string | null;
   homeTeam: {
     team: number | Team;
@@ -361,6 +362,7 @@ export interface TeamsSelect<T extends boolean = true> {
  * via the `definition` "matchups_select".
  */
 export interface MatchupsSelect<T extends boolean = true> {
+  title?: T;
   date?: T;
   homeTeam?:
     | T
