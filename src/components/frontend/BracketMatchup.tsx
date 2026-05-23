@@ -52,11 +52,9 @@ function TeamSlot({
         <div className={`truncate text-sm ${nameClass}`}>
           {team ? team.name : label || 'TBD'}
         </div>
-        {team && (
-          <div className="truncate text-[10px] text-bb-text-dim">
-            {team.coachName}
-          </div>
-        )}
+        <div className="truncate text-[10px] text-bb-text-dim">
+          {team ? team.coachName : '\u00A0'}
+        </div>
       </div>
       {isPlayed && touchdowns !== undefined ? (
         <div className="flex items-center gap-2">
@@ -80,7 +78,7 @@ export function BracketMatchup({ matchup, homeLabel, awayLabel, isOvertime }: Pr
   if (!matchup) {
     // TBD state – no matchup created yet
     return (
-      <div className="w-56 border border-dashed border-bb-tbd bg-bb-dark/50">
+      <div className="border border-dashed border-bb-tbd bg-bb-dark/50">
         <TeamSlot label={homeLabel || 'TBD'} highlight="tbd" isPlayed={false} />
         <div className="border-t border-dashed border-bb-tbd" />
         <TeamSlot label={awayLabel || 'TBD'} highlight="tbd" isPlayed={false} />
@@ -99,7 +97,7 @@ export function BracketMatchup({ matchup, homeLabel, awayLabel, isOvertime }: Pr
 
   return (
     <div
-      className={`w-56 border transition-colors ${
+      className={`border transition-colors ${
         result
           ? 'border-bb-border bg-bb-dark hover:border-bb-gold-dim'
           : 'border-bb-border bg-bb-dark'
