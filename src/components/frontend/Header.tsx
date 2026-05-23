@@ -3,13 +3,27 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const navItems = [
+type NavItem = { href: string; label: string }
+
+const baseNavItems: NavItem[] = [
   { href: '/', label: 'Tabelle' },
   { href: '/matchdays', label: 'Spieltage' },
 ]
 
-export function Header({ leagueName, isLoggedIn }: { leagueName?: string; isLoggedIn?: boolean }) {
+export function Header({
+  leagueName,
+  isLoggedIn,
+  hasTournament,
+}: {
+  leagueName?: string
+  isLoggedIn?: boolean
+  hasTournament?: boolean
+}) {
   const pathname = usePathname()
+
+  const navItems: NavItem[] = hasTournament
+    ? [...baseNavItems, { href: '/tournament', label: 'Super Bowl' }]
+    : baseNavItems
 
   return (
     <header className="mb-8 border-b border-bb-border pb-6">

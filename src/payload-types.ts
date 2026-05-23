@@ -72,6 +72,7 @@ export interface Config {
     teams: Team;
     matchups: Matchup;
     leagues: League;
+    tournaments: Tournament;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     teams: TeamsSelect<false> | TeamsSelect<true>;
     matchups: MatchupsSelect<false> | MatchupsSelect<true>;
     leagues: LeaguesSelect<false> | LeaguesSelect<true>;
+    tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -190,6 +192,10 @@ export interface Matchup {
   id: number;
   title?: string | null;
   date?: string | null;
+  /**
+   * Wurde dieses Spiel in der Verlängerung entschieden?
+   */
+  overtime?: boolean | null;
   homeTeam: {
     team: number | Team;
     touchdowns: number;
@@ -214,6 +220,49 @@ export interface League {
     | {
         name: string;
         matchups?: (number | Matchup)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tournaments".
+ */
+export interface Tournament {
+  id: number;
+  name: string;
+  league?: (number | null) | League;
+  rounds?:
+    | {
+        name: string;
+        date?: string | null;
+        games?:
+          | {
+              /**
+               * Wird automatisch erstellt, wenn beide Teams feststehen.
+               */
+              matchup?: (number | null) | Matchup;
+              homeSource: {
+                type: 'team' | 'previousRoundWinner';
+                team?: (number | null) | Team;
+                /**
+                 * 0 = erstes Spiel, 1 = zweites Spiel, usw.
+                 */
+                gameIndex?: number | null;
+              };
+              awaySource: {
+                type: 'team' | 'previousRoundWinner';
+                team?: (number | null) | Team;
+                /**
+                 * 0 = erstes Spiel, 1 = zweites Spiel, usw.
+                 */
+                gameIndex?: number | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -263,6 +312,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'leagues';
         value: number | League;
+      } | null)
+    | ({
+        relationTo: 'tournaments';
+        value: number | Tournament;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -364,6 +417,7 @@ export interface TeamsSelect<T extends boolean = true> {
 export interface MatchupsSelect<T extends boolean = true> {
   title?: T;
   date?: T;
+  overtime?: T;
   homeTeam?:
     | T
     | {
@@ -392,6 +446,43 @@ export interface LeaguesSelect<T extends boolean = true> {
     | {
         name?: T;
         matchups?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tournaments_select".
+ */
+export interface TournamentsSelect<T extends boolean = true> {
+  name?: T;
+  league?: T;
+  rounds?:
+    | T
+    | {
+        name?: T;
+        date?: T;
+        games?:
+          | T
+          | {
+              matchup?: T;
+              homeSource?:
+                | T
+                | {
+                    type?: T;
+                    team?: T;
+                    gameIndex?: T;
+                  };
+              awaySource?:
+                | T
+                | {
+                    type?: T;
+                    team?: T;
+                    gameIndex?: T;
+                  };
+              id?: T;
+            };
         id?: T;
       };
   updatedAt?: T;

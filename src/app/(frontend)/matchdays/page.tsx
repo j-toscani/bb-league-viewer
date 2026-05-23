@@ -1,4 +1,5 @@
 import { getLatestLeague, isAuthenticated } from '@/lib/league'
+import { hasTournamentForLeague } from '@/lib/tournament'
 import { EmptyState } from '@/components/frontend/EmptyState'
 import { MatchdayCard } from '@/components/frontend/MatchdayCard'
 import { Header } from '@/components/frontend/Header'
@@ -13,10 +14,11 @@ export default async function SpieltagePage() {
   }
 
   const matchdays = league.matchdays ?? []
+  const hasTournament = await hasTournamentForLeague(league.id)
 
   return (
     <div>
-      <Header leagueName={league.name} isLoggedIn={loggedIn} />
+      <Header leagueName={league.name} isLoggedIn={loggedIn} hasTournament={hasTournament} />
 
       {matchdays.length === 0 ? (
         <div className="border border-bb-border bg-bb-panel p-12 text-center">

@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Teams } from './collections/Teams'
 import { Matchups } from './collections/Matchups'
 import { Leagues } from './collections/Leagues'
+import { Tournaments } from './collections/Tournaments'
 import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -22,7 +23,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Teams, Matchups, Leagues],
+  collections: [Users, Media, Teams, Matchups, Leagues, Tournaments],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
