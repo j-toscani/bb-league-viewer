@@ -1,39 +1,38 @@
 import { getLatestLeague, isAuthenticated } from '@/lib/league'
-import { getTournamentForLeague, getTournamentChampion } from '@/lib/tournament'
-import { computeStandings } from '@/lib/standings'
+import { getTournamentForLeague } from '@/lib/tournament'
 import { EmptyState } from '@/components/frontend/EmptyState'
-import { LeagueTable } from '@/components/frontend/LeagueTable'
 import { Header } from '@/components/frontend/Header'
-import { ChampionBanner } from '@/components/frontend/ChampionBanner'
+import { TournamentBracket } from '@/components/frontend/TournamentBracket'
 
 export const dynamic = 'force-dynamic'
 
-export default async function HomePage() {
+export default async function TournamentPage() {
   const [league, loggedIn] = await Promise.all([getLatestLeague(), isAuthenticated()])
 
   if (!league) {
     return <EmptyState />
   }
 
-  const matchdays = league.matchdays ?? []
-
   const tournament = await getTournamentForLeague(league.id)
-  const champion = tournament ? getTournamentChampion(tournament) : null
 
   return (
     <div>
       <Header leagueName={league.name} isLoggedIn={loggedIn} hasTournament={!!tournament} />
 
-      {champion && <ChampionBanner champion={champion} tournamentName={tournament!.name} />}
-
-      {matchdays.length === 0 ? (
+      {!tournament ? (
         <div className="border border-bb-border bg-bb-panel p-12 text-center">
           <p className="text-bb-text-muted">
-            Noch keine Spieltage in dieser Liga angelegt.
+            Noch kein Turnier für diese Liga angelegt.
           </p>
         </div>
       ) : (
-        <LeagueTable groups={computeStandings(matchdays)} />
+        <section>
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-1 w-8 bg-bb-crimson" />
+            <h2 className="text-xl font-bold text-bb-gold">{tournament.name}</h2>
+          </div>
+          <TournamentBracket tournament={tournament} />
+        </section>
       )}
     </div>
   )

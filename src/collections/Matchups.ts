@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { handleMatchupResultChange } from '@/lib/tournament-hooks'
 
 export const Matchups: CollectionConfig = {
   slug: 'matchups',
@@ -29,6 +30,7 @@ export const Matchups: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [handleMatchupResultChange],
   },
   fields: [
     {
@@ -46,6 +48,15 @@ export const Matchups: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
         },
+      },
+    },
+    {
+      name: 'overtime',
+      type: 'checkbox',
+      label: 'Overtime',
+      defaultValue: false,
+      admin: {
+        description: 'Wurde dieses Spiel in der Verlängerung entschieden?',
       },
     },
     {

@@ -15,10 +15,12 @@
   --color-bb-gold: #c5961a;
   --color-bb-gold-light: #dab240;
   --color-bb-gold-dim: #8a6a12;
+  --color-bb-gold-glow: #c5961a40;
 
   --color-bb-text: #e8e0d4;
   --color-bb-text-muted: #9a9080;
   --color-bb-text-dim: #5a5348;
+  --color-bb-tbd: #3d3830;
 
   --color-bb-win: #2d8a4e;
   --color-bb-loss: #8b1a1a;
